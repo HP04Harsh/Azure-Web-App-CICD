@@ -58,4 +58,16 @@ To connect this repository to your Azure instance:
 
 In the project directory, you can run:
 
-**CommandAction**npm run devRuns the app in development mode with HMR.npm run buildBuilds the app for production to the dist folder.npm run lintRuns ESLint to check for code quality issues.npm run previewLocally previews the production build.
+**Command-Action**
+```
+npm run dev
+Runs the app in development mode with HMR.
+
+npm run build 
+Builds the app for production to the dist folder.
+
+npm run lint - Runs ESLint to check for code quality issues.
+
+npm run preview
+Locally previews the production build.
+```
