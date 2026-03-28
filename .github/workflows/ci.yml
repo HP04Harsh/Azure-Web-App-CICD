@@ -1,38 +1,47 @@
 name: Web-App
+
 on:
   push:
     branches:
-     - main
- 
+      - main
+
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      steps:
-         - uses: actions/checkout@v4
-         - name: Set up Node.js
+  build:
+    runs-on: ubuntu-latest
 
-         - uses: actions/setup-node@v2
-           with:
-             node-version: '20'
+    steps:
+      # 1. Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-         - name: Install dependencies
-           run: npm install
+      # 2. Setup Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-         - name: Run tests
-           run: npm test
-         
-         - name: Build the app
-           run: npm run build
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-         - name: Zip the build folder
-           run: |
-                cd dist
-                zip -r ../app.zip .
-            
-         - name: Deploy to Azure Web App
-           uses: azure/webapps-deploy@v2
-           with:
-              app-name: 'gondia'
-              publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
-              package: './app.zip'
-            
+      # 4. Run tests
+      - name: Run tests
+        run: npm test
+
+      # 5. Build the app
+      - name: Build the app
+        run: npm run build
+
+      # 6. Zip the build folder
+      - name: Zip the build folder
+        run: |
+          cd dist
+          zip -r ../app.zip .
+
+      # 7. Deploy to Azure Web App
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: gondia
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: app.zip
