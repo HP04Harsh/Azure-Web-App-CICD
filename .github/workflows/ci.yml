@@ -36,7 +36,7 @@ jobs:
       - name: Zip the build folder
         run: |
           cd dist
-          zip -r ../app.zip .
+          zip -r $GITHUB_WORKSPACE/app.zip .
 
       # 7. Deploy to Azure Web App
       - name: Deploy to Azure Web App
