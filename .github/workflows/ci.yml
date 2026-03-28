@@ -6,39 +6,40 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
+      # Checkout
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js
-      - name: Set up Node.js
+      # Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3. Install dependencies
+      # Install deps
       - name: Install dependencies
         run: npm install
 
-      # 4. Run tests
-      - name: Run tests
-        run: echo "No tests to run"
-
-      # 5. Build the app
-      - name: Build the app
+      # Build
+      - name: Build app
         run: npm run build
 
-      # 6. Zip the build folder
-      - name: Zip the build folder
-        run: |
-          cd dist
-          zip -r $GITHUB_WORKSPACE/app.zip .
+      # Verify dist (IMPORTANT)
+      - name: Verify dist folder
+        run: ls -R dist
 
-      # 7. Deploy to Azure Web App
+      # Upload artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: dist
+
+      # Deploy to Azure
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
@@ -46,5 +47,3 @@ jobs:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: dist
           clean: true
-
-          
