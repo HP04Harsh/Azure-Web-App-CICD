@@ -1,73 +1,75 @@
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/fac9c5b7-603b-486d-bd02-a19c10b7b138" />
 
+🚀 Vite + React: Seamless CI/CD to Azure App Service
+====================================================
 
+This repository provides a robust blueprint for automating the delivery of modern React applications to **Azure App Service**. By integrating **Vite** for rapid builds and **GitHub Actions** for orchestration, this project minimizes manual intervention and ensures code quality at every commit.
 
-### 🚀 Overview
+🛠️ Tech Stack & Tools
+----------------------
 
-The primary goal of this project is to demonstrate a seamless **Continuous Integration and Continuous Deployment (CI/CD)** pipeline. By leveraging GitHub Actions, every push to the main branch triggers an automated build and deployment process, ensuring that the live Azure Web App always reflects the latest stable code.
-
-### 🛠️ Tech Stack
-
-*   **Frontend Framework:** [React](https://react.dev/)
+*   **Core:** [React](https://react.dev/) (Functional Components & Hooks)
     
-*   **Build Tool:** [Vite](https://vitejs.dev/) (Optimized for speed and HMR)
+*   **Build Tool:** [Vite](https://vitejs.dev/) (ESM-based HMR and lightning-fast bundling)
     
-*   **Hosting Platform:** [Azure App Service](https://azure.microsoft.com/en-us/products/app-service/)
+*   **Hosting:** [Azure App Service](https://azure.microsoft.com/en-us/products/app-service/) (Linux/Windows containers)
     
-*   **CI/CD Engine:** [GitHub Actions](https://github.com/features/actions)
+*   **CI/CD:** [GitHub Actions](https://github.com/features/actions)
     
-*   **Linting:** [ESLint](https://eslint.org/)
-    
-
-### ⚙️ CI/CD Workflow Highlights
-
-The automated pipeline defined in .github/workflows handles the following lifecycle stages:
-
-1.  **Environment Setup:** Initializes the runner with the required Node.js version.
-    
-2.  **Dependency Management:** Installs project dependencies using npm install.
-    
-3.  **Production Build:** Generates a minified, production-ready bundle via Vite.
-    
-4.  **Artifact Deployment:** Securely uploads the build artifacts to the designated Azure Web App slot using a **Publish Profile** or **Service Principal**.
+*   **Code Quality:** [ESLint](https://eslint.org/)
     
 
-### 📖 Getting Started
+⚙️ Automated Workflow Architecture
+----------------------------------
 
-#### Prerequisites
+The pipeline defined in .github/workflows follows a strict production-grade lifecycle:
+
+1.  **Environment Initialization:** Provisions a Node.js runner (v18+) to match production parity.
+    
+2.  **Dependency Resolution:** Executes npm install to build the local dependency tree.
+    
+3.  **Linting & Validation:** Runs static analysis via npm run lint to ensure code standards.
+    
+4.  **Optimized Compilation:** Triggers npm run build to generate a tree-shaked, minified /dist folder.
+    
+5.  **Secure Deployment:** Utilizes the **Azure Publish Profile** to push artifacts securely to the Web App slot.
+    
+
+🚀 Getting Started
+------------------
+
+### Prerequisites
 
 *   An active **Azure Subscription**.
     
-*   An **Azure App Service** (Web App) instance created.
+*   A pre-configured **Web App** instance on Azure.
     
-*   Node.js (v18 or higher recommended).
-    
-
-#### Configuration
-
-To connect this repository to your Azure instance:
-
-1.  Download the **Publish Profile** from your Azure Web App overview page.
-    
-2.  Add the content of the profile as a **GitHub Secret** named AZURE\_WEBAPP\_PUBLISH\_PROFILE.
-    
-3.  Ensure the app-name in the workflow YAML matches your Azure resource name.
+*   Node.js (v18.x or higher) installed locally.
     
 
-### 🛠️ Available Scripts
-
-In the project directory, you can run:
-
-**Command-Action**
+### Deployment Configuration
 ```
-npm run dev
-Runs the app in development mode with HMR.
-
-npm run build 
-Builds the app for production to the dist folder.
-
-npm run lint - Runs ESLint to check for code quality issues.
-
-npm run preview
-Locally previews the production build.
+1.  **Secret Management:** Download your [Publish Profile](https://github.com/HP04Harsh/azure-appservice-react-deploy-cicd#configuration) from the Azure Portal.
+    
+2.  **GitHub Setup:** Navigate to Settings > Secrets and variables > Actions and add:
+    
+    *   AZURE\_WEBAPP\_PUBLISH\_PROFILE: Paste the XML content of your profile.
+        
+3.  **Workflow Sync:** Update the app-name in .github/workflows/main.yml to match your Azure resource name.
+    
 ```
+scripts Available Scripts
+-------------------------
+```
+npm run dev Spins up the Vite development server.
+
+npm run build Compiles the production-ready bundle.
+
+npm run lint Performs static code analysis.
+
+npm run preview Previews the production build locally.
+```
+🤝 Contributing
+---------------
+
+Contributions are welcome! Please feel free to submit a Pull Request or open an Issue for feature requests.
